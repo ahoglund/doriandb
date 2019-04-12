@@ -89,4 +89,24 @@ describe "database" do
       expect(output[i]).to eq expected_output[i]
     end
   end
+
+  it "does not allow for a negative id" do
+    input = [
+      "insert -1 name email@email.com",
+      "select",
+      ".exit",
+    ]
+
+    expected_output = [
+      "#{DB_PROMPT} Id cannot be negative.",
+      "#{DB_PROMPT} Executed.",
+      "#{DB_PROMPT} Bye!",
+    ]
+
+    output = run_script(input)
+
+    (0..(input.length - 1)).each do |i|
+      expect(output[i]).to eq expected_output[i]
+    end
+  end
 end
